@@ -41,7 +41,9 @@
 
 #include "arch/arm/linux/process.hh"
 
+#ifdef __linux__
 #include <sys/syscall.h>
+#endif
 
 #include "arch/arm/isa_traits.hh"
 #include "arch/arm/linux/linux.hh"

@@ -130,6 +130,10 @@ class OutputFile
     stream_type_t *const _fstream;
 };
 
+#undef stderr
+#undef stdout
+#undef stdin
+
 /** Interface for creating files in a gem5 output directory. */
 class OutputDirectory
 {

@@ -67,6 +67,7 @@ ArmProcess::ArmProcess(const ProcessParams &params,
     fatal_if(params.useArchPT, "Arch page tables not implemented.");
 }
 
+ArmProcess32::~ArmProcess32() {}
 ArmProcess32::ArmProcess32(const ProcessParams &params,
         ::Loader::ObjectFile *objFile, ::Loader::Arch _arch)
     : ArmProcess(params, objFile, _arch)
@@ -82,6 +83,7 @@ ArmProcess32::ArmProcess32(const ProcessParams &params,
             next_thread_stack_base, mmap_end);
 }
 
+ArmProcess64::~ArmProcess64(){}
 ArmProcess64::ArmProcess64(
         const ProcessParams &params, ::Loader::ObjectFile *objFile,
         ::Loader::Arch _arch)

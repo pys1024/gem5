@@ -42,6 +42,10 @@
 #include <ostream>
 #include <stdexcept>
 
+#undef stderr
+#undef stdout
+#undef stdin
+
 /** uint64_t constant */
 #define ULL(N)          ((uint64_t)N##ULL)
 /** int64_t constant */

@@ -33,9 +33,11 @@
 
 #include "arch/arm/freebsd/se_workload.hh"
 
+#ifdef __linux__
 #include <sys/syscall.h>
 #if !defined ( __GNU_LIBRARY__ ) && defined(__FreeBSD__)
 #include <sys/sysctl.h>
+#endif
 #endif
 
 #include "arch/arm/process.hh"
@@ -110,7 +112,9 @@ sysctlFunc(SyscallDesc *desc, ThreadContext *tc, VPtr<> namep, size_t nameLen,
     void *holdp = (void *)buf2.bufferPtr();
     size_t *holdlenp = (size_t *)buf3.bufferPtr();
 
+#ifdef __linux__
     ret = sysctl((int *)hnamep, nameLen, holdp, holdlenp, hnewp, newlen);
+#endif
 
     buf.copyOut(tc->getVirtProxy());
     buf2.copyOut(tc->getVirtProxy());

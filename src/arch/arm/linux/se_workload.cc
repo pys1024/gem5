@@ -40,7 +40,9 @@
 
 #include "arch/arm/linux/se_workload.hh"
 
+#ifdef __linux__
 #include <sys/syscall.h>
+#endif
 
 #include "arch/arm/linux/process.hh"
 #include "base/loader/object_file.hh"

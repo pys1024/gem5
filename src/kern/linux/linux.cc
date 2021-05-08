@@ -72,7 +72,11 @@ Linux::openSpecialFile(std::string path, Process *process,
 
     if (matched) {
         FILE *f = tmpfile();
+#ifdef __linux__
         int fd = fileno(f);
+#else
+	int fd = 0;
+#endif
         M5_VAR_USED size_t ret = fwrite(data.c_str(), 1, data.size(), f);
         assert(ret == data.size());
         rewind(f);

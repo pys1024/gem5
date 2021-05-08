@@ -130,12 +130,21 @@ const std::vector<uint8_t> ArmSemihosting::features{
 };
 
 const std::map<const std::string, FILE *> ArmSemihosting::stdioMap{
+#ifdef __linux__
     {"cin",    ::stdin},
     {"stdin",  ::stdin},
     {"cout",   ::stdout},
     {"stdout", ::stdout},
     {"cerr",   ::stderr},
     {"stderr", ::stderr},
+#else
+    {"cin",    _REENT->_stdin},
+    {"stdin",  _REENT->_stdin},
+    {"cout",   _REENT->_stdout},
+    {"stdout", _REENT->_stdout},
+    {"cerr",   _REENT->_stderr},
+    {"stderr", _REENT->_stderr},
+#endif
 };
 
 ArmSemihosting::ArmSemihosting(const ArmSemihostingParams &p)

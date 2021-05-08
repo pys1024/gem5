@@ -224,7 +224,7 @@ global_vars = Variables(global_vars_file, args=ARGUMENTS)
 global_vars.AddVariables(
     ('CC', 'C compiler', environ.get('CC', main['CC'])),
     ('CXX', 'C++ compiler', environ.get('CXX', main['CXX'])),
-    ('CCFLAGS_EXTRA', 'Extra C and C++ compiler flags', ''),
+    ('CCFLAGS_EXTRA', 'Extra C and C++ compiler flags', '-D_GNU_SOURCE'),
     ('LDFLAGS_EXTRA', 'Extra linker flags', ''),
     ('MARSHAL_CCFLAGS_EXTRA', 'Extra C and C++ marshal compiler flags', ''),
     ('MARSHAL_LDFLAGS_EXTRA', 'Extra marshal linker flags', ''),
@@ -871,7 +871,7 @@ def add_local_rpath(env, *targets):
         env.Append(RPATH=[env.Literal(os.path.join(*components))])
 
 if sys.platform != "darwin":
-    main.Append(LINKFLAGS=Split('-z origin'))
+    main.Append(LINKFLAGS=Split(''))
 
 main.AddMethod(add_local_rpath, 'AddLocalRPATH')
 

@@ -40,7 +40,9 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <sys/types.h>
+#ifdef __linux__
 #include <sys/user.h>
+#endif
 #include <unistd.h>
 #include <zlib.h>
 

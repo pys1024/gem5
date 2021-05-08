@@ -77,6 +77,7 @@ class ArmProcess32 : public ArmProcess
   public:
     ArmProcess32(const ProcessParams &params, ::Loader::ObjectFile *objFile,
                  ::Loader::Arch _arch);
+    ~ArmProcess32();
 
   protected:
     void initState() override;
@@ -90,6 +91,7 @@ class ArmProcess64 : public ArmProcess
   public:
     ArmProcess64(const ProcessParams &params, ::Loader::ObjectFile *objFile,
                  ::Loader::Arch _arch);
+    ~ArmProcess64();
 
   protected:
     void initState() override;

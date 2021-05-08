@@ -29,7 +29,9 @@
 #include "sim/syscall_emul.hh"
 
 #include <fcntl.h>
+#ifdef __linux__
 #include <sys/syscall.h>
+#endif
 #include <unistd.h>
 
 #include <csignal>
@@ -1604,7 +1606,7 @@ getpeernameFunc(SyscallDesc *desc, ThreadContext *tc,
 
     int retval = getpeername(sim_fd,
                              (struct sockaddr *)bufSock.bufferPtr(),
-                             (unsigned *)bufAddrlen.bufferPtr());
+                             (int *)bufAddrlen.bufferPtr());
 
     if (retval != -1) {
         bufSock.copyOut(tc->getVirtProxy());
