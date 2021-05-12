@@ -1606,7 +1606,7 @@ getpeernameFunc(SyscallDesc *desc, ThreadContext *tc,
 
     int retval = getpeername(sim_fd,
                              (struct sockaddr *)bufSock.bufferPtr(),
-                             (int *)bufAddrlen.bufferPtr());
+                             (socklen_t *)bufAddrlen.bufferPtr());
 
     if (retval != -1) {
         bufSock.copyOut(tc->getVirtProxy());

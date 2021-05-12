@@ -62,6 +62,7 @@
 
 #else
 #include <sys/mount.h>
+#include <sys/statfs.h>
 
 #endif
 
@@ -1542,11 +1543,7 @@ fstatfsFunc(SyscallDesc *desc, ThreadContext *tc,
     int sim_fd = ffdp->getSimFD();
 
     struct statfs hostBuf;
-#ifdef __linux__
     int result = fstatfs(sim_fd, &hostBuf);
-#else
-    int result = 0;
-#endif
 
     if (result < 0)
         return -errno;

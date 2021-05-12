@@ -35,9 +35,14 @@
 
 #ifdef __linux__
 #include <sys/syscall.h>
+
 #if !defined ( __GNU_LIBRARY__ ) && defined(__FreeBSD__)
 #include <sys/sysctl.h>
+
 #endif
+#else
+#include <sys/statfs.h>
+
 #endif
 
 #include "arch/arm/process.hh"
@@ -86,7 +91,7 @@ issetugidFunc(SyscallDesc *desc, ThreadContext *tc)
     return 0;
 }
 
-#if !defined ( __GNU_LIBRARY__ )
+#if !defined ( __GNU_LIBRARY__ ) && defined(__linux__)
 static SyscallReturn
 sysctlFunc(SyscallDesc *desc, ThreadContext *tc, VPtr<> namep, size_t nameLen,
            VPtr<> oldp, VPtr<> oldlenp, VPtr<> newp, size_t newlen)
@@ -112,9 +117,7 @@ sysctlFunc(SyscallDesc *desc, ThreadContext *tc, VPtr<> namep, size_t nameLen,
     void *holdp = (void *)buf2.bufferPtr();
     size_t *holdlenp = (size_t *)buf3.bufferPtr();
 
-#ifdef __linux__
     ret = sysctl((int *)hnamep, nameLen, holdp, holdlenp, hnewp, newlen);
-#endif
 
     buf.copyOut(tc->getVirtProxy());
     buf2.copyOut(tc->getVirtProxy());
@@ -137,7 +140,7 @@ static SyscallDescTable<EmuFreebsd::SyscallABI64> syscallDescs64 = {
     {   58, "readlink", readlinkFunc },
     {  117, "getrusage", getrusageFunc<ArmFreebsd64> },
     {  189, "fstat", fstatFunc<ArmFreebsd64> },
-#if !defined ( __GNU_LIBRARY__ )
+#if !defined ( __GNU_LIBRARY__ ) && defined(__linux__)
     {  202, "sysctl", sysctlFunc },
 #else
     {  202, "sysctl" },

@@ -43,6 +43,10 @@
 
 #ifdef __linux__
 #include <sys/syscall.h>
+
+#else
+#include <sys/statfs.h>
+
 #endif
 
 #include "arch/arm/isa_traits.hh"
