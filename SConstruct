@@ -432,7 +432,7 @@ if main['BATCH']:
     main['AR']     = main['BATCH_CMD'] + ' ' + main['AR']
     main['RANLIB'] = main['BATCH_CMD'] + ' ' + main['RANLIB']
 
-if sys.platform == 'cygwin':
+if sys.platform in ('cygwin', 'msys'):
     # cygwin has some header file issues...
     main.Append(CCFLAGS=["-Wno-uninitialized"])
     main.Append(CCFLAGS=["-D_GNU_SOURCE", "-Wa,-mbig-obj"])
@@ -871,7 +871,7 @@ def add_local_rpath(env, *targets):
         ]
         env.Append(RPATH=[env.Literal(os.path.join(*components))])
 
-if sys.platform not in ("darwin", "cygwin"):
+if sys.platform not in ("darwin", "cygwin", "msys"):
     main.Append(LINKFLAGS=Split('-z origin'))
 
 main.AddMethod(add_local_rpath, 'AddLocalRPATH')
@@ -1010,8 +1010,8 @@ Build variables for {dir}:
     if env['USE_PNG']:
         env.Append(LIBS=['png'])
 
-    if sys.platform == 'cygwin':
-        # libiostream3 cannot find gzsetparams in cygwin
+    if sys.platform in ('cygwin', 'msys'):
+        # libiostream3 cannot find gzsetparams in cygwin/msys
         env.Append(LIBS=['z'])
 
     if env['EFENCE']:
